@@ -26,10 +26,10 @@ import lombok.Setter;
 public class PhotoDto {
 
 	@JsonProperty("albumId")
-	private Integer albumId;
+	private int albumId;
 	
 	@JsonProperty("id")
-	private Integer id;
+	private int id;
 	
 	@JsonProperty("title")
 	private String title;

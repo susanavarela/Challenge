@@ -30,7 +30,7 @@ import lombok.Setter;
 public class UserDto {
 
 	@JsonProperty("id")
-	private Integer id;
+	private int id;
 	
 	@JsonProperty("name")
 	private String name;
