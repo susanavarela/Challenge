@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.challenge.Accenture.dto.AlbumDto;
+import com.challenge.Accenture.dto.CommentDto;
 import com.challenge.Accenture.dto.PhotoDto;
 import com.challenge.Accenture.dto.UserDto;
 import com.challenge.Accenture.service.JsonPlaceHolderService;
@@ -95,7 +96,17 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 		return User;
 	}
 
-	
+	@Override
+	public List<CommentDto> getCommentByPostId(int postId) {
+		String url = "/comments?postId=" + postId;
+		 return webClient
+	    		.get()
+	            .uri(url)
+	            .retrieve()
+	            .bodyToMono(new ParameterizedTypeReference<List<CommentDto>>() {}).block();
+	}
+
+
 	
 	 
 	
