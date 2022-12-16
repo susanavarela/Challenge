@@ -11,6 +11,5 @@ public interface AlbumsService {
 	public AlbumDto findById(int albumId);
 	
 	public List<AlbumDto> getUserAndAlbums(int id);
-		
-	
+
 }

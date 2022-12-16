@@ -9,6 +9,7 @@ import com.challenge.Accenture.dto.AlbumDto;
 import com.challenge.Accenture.service.AlbumsService;
 import com.challenge.Accenture.service.JsonPlaceHolderService;
 
+
 @Service("AlbumsServiceImpl")
 public class AlbumsServiceImpl implements AlbumsService{
 
@@ -32,6 +33,4 @@ public class AlbumsServiceImpl implements AlbumsService{
 	public List<AlbumDto> getUserAndAlbums(int id) {
 		return jsonPlaceHolderService.getUserAndAlbums(id);
 	}
-	
-
 }

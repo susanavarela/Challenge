@@ -50,7 +50,7 @@ public class BusinessController {
 		return ResponseEntity.ok().body(usersService.getUsers());
 	}
 	
-	//retorna todos los albunes
+	//retorna todos los albums
 	@GetMapping("/albums")
 	public ResponseEntity<List<AlbumDto>> findAllAlbums(){
 		return ResponseEntity.ok().body(albumsService.getAlbums());
@@ -72,7 +72,7 @@ public class BusinessController {
 		}
 	}
 	
-	//retorna todos los albunes de un usuario enviando su id
+	//retorna todos los albums de un usuario enviando su id
 	@GetMapping("/userandalbums/{id}")
 	public ResponseEntity<List<AlbumDto>> userAndAlbums(@PathVariable("id") int id){
 		return ResponseEntity.ok().body(albumsService.getUserAndAlbums(id));
@@ -123,6 +123,24 @@ public class BusinessController {
 	}
 	
 	
+	//retorna un album si es que el usuario tiene permisos
+	@GetMapping("/album={idalbum}/user={iduser}")
+	public ResponseEntity<Object> getByIdwithPermission(@PathVariable("idalbum") int idAlbum, @PathVariable("iduser") int userId){
+		try {	
+			//Obtengo el permiso del usuario que solicita ver el album
+			int permission = permissionsService.getPermissionTypeByAlbumAndUser(idAlbum, userId);
+			
+			//Obtengo el album solicitado
+			AlbumDto album = albumsService.findById(idAlbum);
+			
+			//verifico que tenga los permisos o que sea el dueño del album
+			if(permission == 0 && album.getUserId() != userId) throw new Exception("El usuario no tiene permiso de ver el album");
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(album);
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error en la busqueda de datos, " + e.getMessage());
+		}
+	}
 	
 	
 		

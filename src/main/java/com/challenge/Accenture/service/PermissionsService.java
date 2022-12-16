@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.challenge.Accenture.dto.PermissionDto;
 import com.challenge.Accenture.dto.UserDto;
+import com.challenge.Accenture.entities.Permission;
 
 public interface PermissionsService {
 
@@ -13,5 +14,8 @@ public interface PermissionsService {
 	
 	public List<UserDto> getUsersByAlbumAndPermission(int idAlbum, int permissionType)throws Exception;
 	
-
+	public Permission getPermissionByAlbumAndUser(int idAlbum, int idUser);
+	
+	public int getPermissionTypeByAlbumAndUser(int idAlbum, int idUser);
+	
 }

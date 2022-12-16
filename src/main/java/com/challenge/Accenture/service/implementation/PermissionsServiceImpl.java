@@ -22,6 +22,7 @@ public class PermissionsServiceImpl implements PermissionsService{
 
 	/*
 	 * tipos de permisos
+	 * 0 no tiene permisos
 	 * 1 lectura
 	 * 2 escritura (teniendo en cuenta de que si escribe tambien puede leer)
 	 */
@@ -50,7 +51,7 @@ public class PermissionsServiceImpl implements PermissionsService{
 		if(permission == null)  throw new Exception("El permiso no fue encontrado");
 		
 		//verifico el tipo de permiso que este dentro de los parametros establecidos
-		if(permissionDto.getPermissionType() != 1 && permissionDto.getPermissionType() != 2)  throw new Exception("El tipo de permiso no es correcto");
+		if(permissionDto.getPermissionType() != 0 && permissionDto.getPermissionType() != 1 && permissionDto.getPermissionType() != 2)  throw new Exception("El tipo de permiso no es correcto");
 		
 		//lo unico que modifica es el tipo de permiso y se guarda
 		permission.setPermissionType(permissionDto.getPermissionType());
@@ -64,6 +65,7 @@ public class PermissionsServiceImpl implements PermissionsService{
 	}
 	
 	//obtiene un permiso en base a un id de album y un id de usuario
+	@Override
 	public Permission getPermissionByAlbumAndUser(int idAlbum, int idUser){
 			return permissionRepository.findPermission(idAlbum, idUser);
 		}
@@ -108,7 +110,7 @@ public class PermissionsServiceImpl implements PermissionsService{
 		if(User.getName() == null)throw new Exception("El usuario no fue encontrado");
 		
 		//verifico el tipo de permiso que este dentro de los parametros establecidos
-		if(permissionDto.getPermissionType() != 1 && permissionDto.getPermissionType() != 2)  throw new Exception("El tipo de permiso no es correcto");
+		if(permissionDto.getPermissionType() != 0 && permissionDto.getPermissionType() != 1 && permissionDto.getPermissionType() != 2)  throw new Exception("El tipo de permiso no es correcto");
 		
 		//Se crea el permiso y se guarda
 		Permission permission = new Permission(permissionDto.getAlbum(), permissionDto.getUser(), permissionDto.getPermissionType());
@@ -119,8 +121,10 @@ public class PermissionsServiceImpl implements PermissionsService{
 
 	//obtiene una lista de usuarios en base a un id de album, tipo de permiso
 	public List<UserDto> getUsersByAlbumAndPermission(int idAlbum, int permissionType)throws Exception{
+		
 		//Obtengo la lista de permisos de la base de datos filtrando por  el id del album y el tipo de permiso
 		List<Permission> permissions = permissionRepository.getUsersByAlbumAndPermission(idAlbum, permissionType);
+		
 		//verifico si esta vacia lo informo en un mensaje
 		if(permissions.isEmpty())throw new Exception("No se encuentran los usuarios con los permisos para ese album");
 		List<UserDto> users = new ArrayList<UserDto>();
@@ -133,5 +137,16 @@ public class PermissionsServiceImpl implements PermissionsService{
 		}
 		
 		return users;
+	}
+
+	//obtiene un permiso en base a un id de album y un id de usuario
+	@Override
+	public int getPermissionTypeByAlbumAndUser(int idAlbum, int idUser){
+		int type = 0;
+		Permission permission = permissionRepository.findPermission(idAlbum, idUser);
+		if(permission != null) {
+			type = permission.getPermissionType();
+		}
+		return type;
 	}
 }
