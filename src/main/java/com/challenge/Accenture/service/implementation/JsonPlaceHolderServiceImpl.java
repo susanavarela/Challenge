@@ -18,10 +18,13 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 
 	private final WebClient webClient;
 
+	//Se asigna la url a webClient de donde se va a consumir los json
     public JsonPlaceHolderServiceImpl(WebClient.Builder builder) {
         webClient = builder.baseUrl("https://jsonplaceholder.typicode.com/").build();
     }
 	 
+    //Obtiene todos los usuarios sin filtro del servicio
+    @Override
 	public List<UserDto> getUsers() {
 	     return webClient
 	    		.get()
@@ -30,6 +33,8 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 	            .bodyToMono(new ParameterizedTypeReference<List<UserDto>>() {}).block();
 	    }
 	    
+	 //Obtiene todos los albums sin filtro del servicio
+	@Override
 	public List<AlbumDto> getAlbums() {
 	     return webClient
 	    		.get()
@@ -38,6 +43,8 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 	            .bodyToMono(new ParameterizedTypeReference<List<AlbumDto>>() {}).block();
 	    }
 	 
+	 //Obtiene todos las fotos filtrando por id del album
+	@Override
 	public List<PhotoDto> getPhotos(int idAlbum) {
 		 String url = "/photos?albumId=" + idAlbum;
 	     return webClient
@@ -47,6 +54,8 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 	            .bodyToMono(new ParameterizedTypeReference<List<PhotoDto>>() {}).block();
 	    }
 	 
+	 //Obtiene todos los albums filtrando por el id del usuario
+	@Override
 	public List<AlbumDto> getUserAndAlbums(int idUser) {
 		 String url = "/posts?userId=" + idUser;
 		 return webClient
@@ -56,6 +65,7 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 	            .bodyToMono(new ParameterizedTypeReference<List<AlbumDto>>() {}).block();
 	    }
 
+	 //Obtiene un solo album por id 
 	@Override
 	public AlbumDto getAlbumId(int albumId) {
 		List<AlbumDto> albums = getAlbums();
@@ -77,6 +87,7 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 		return album;
 	}
 
+	//Obtiene un solo usuario por id 
 	@Override
 	public UserDto getUserId(int UsertId) {
 		List<UserDto> Users = getUsers();
@@ -96,6 +107,7 @@ public class JsonPlaceHolderServiceImpl implements JsonPlaceHolderService{
 		return User;
 	}
 
+	 //Obtiene todos los comentarios filtrando por el numero de post
 	@Override
 	public List<CommentDto> getCommentByPostId(int postId) {
 		String url = "/comments?postId=" + postId;

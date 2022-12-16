@@ -15,9 +15,9 @@ public class CommentsServiceImpl implements CommentsService{
 	@Autowired
 	private JsonPlaceHolderService jsonPlaceHolderService ;
 	
+	//Obtiene una lista de comentarios filtrando por postId
 	@Override
 	public List<CommentDto> getCommentsByPostId(int postId) throws Exception {
-		
 		return jsonPlaceHolderService.getCommentByPostId(postId);
 	}
 

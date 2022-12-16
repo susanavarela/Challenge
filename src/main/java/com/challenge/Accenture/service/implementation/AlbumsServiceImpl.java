@@ -15,18 +15,19 @@ public class AlbumsServiceImpl implements AlbumsService{
 	@Autowired
 	private JsonPlaceHolderService jsonPlaceHolderService ;
 
+	//Obtiene todos los olbums sin filtros 
 	@Override
-	public List<AlbumDto> getAlbums() {
-		
+	public List<AlbumDto> getAlbums() {	
 		return jsonPlaceHolderService.getAlbums();
 	}
 
+	//Obtiene un album filtrado por id del album
 	@Override
 	public AlbumDto findById(int albumId) {
-		
 		return jsonPlaceHolderService.getAlbumId(albumId);
 	}
 
+	//Obtiene una lista de todos los albums de un usuario, enviando el id del usuario
 	@Override
 	public List<AlbumDto> getUserAndAlbums(int id) {
 		return jsonPlaceHolderService.getUserAndAlbums(id);

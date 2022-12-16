@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.challenge.Accenture.dto.AlbumDto;
-import com.challenge.Accenture.dto.CommentNameDto;
 import com.challenge.Accenture.dto.PermissionDto;
 import com.challenge.Accenture.dto.PhotoDto;
 import com.challenge.Accenture.dto.UserDto;
@@ -69,7 +68,7 @@ public class BusinessController {
 		try {	
 			return ResponseEntity.status(HttpStatus.CREATED).body(photosService.getPhotosByUser(idUser));
 		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la busqueda de datos, " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error en la busqueda de datos, " + e.getMessage());
 		}
 	}
 	
@@ -79,6 +78,16 @@ public class BusinessController {
 		return ResponseEntity.ok().body(albumsService.getUserAndAlbums(id));
 	}
 	
+	//retorna lista de comentarios en base a postId
+	@GetMapping("/comment/{id}")
+	public ResponseEntity<Object> getcommentsByPostId(@PathVariable("id") int postId){	
+		try {	
+			return ResponseEntity.status(HttpStatus.CREATED).body(commentsService.getCommentsByPostId(postId));
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error en la busqueda de datos, " + e.getMessage());
+		}
+	}
+		
 	/*************** Permisos ********************/
 	
 	//crea un permiso, solo el titular del album
@@ -109,19 +118,12 @@ public class BusinessController {
 		try {	
 			return ResponseEntity.status(HttpStatus.CREATED).body(permissionsService.getUsersByAlbumAndPermission(idAlbum, idPermission));
 		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la busqueda de datos, " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error en la busqueda de datos, " + e.getMessage());
 		}
 	}
 	
-	//retorna lista de comentarios en base a postId
-	@GetMapping("/comment/{id}")
-	public ResponseEntity<Object> getcommentsByPostId(@PathVariable("id") int postId){	
-		try {	
-			return ResponseEntity.status(HttpStatus.CREATED).body(commentsService.getCommentsByPostId(postId));
-		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error en la busqueda de datos, " + e.getMessage());
-		}
-	}
+	
+	
 	
 		
 }

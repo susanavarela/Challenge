@@ -21,17 +21,22 @@ public class PhotoServiceImpl implements PhotosService{
 	@Autowired
 	private JsonPlaceHolderService jsonPlaceHolderService;
 	
+	//Obtiene todos las fotos filtrando por album
 	@Override
 	public List<PhotoDto> getPhotos(int idAlbum) {
 		return jsonPlaceHolderService.getPhotos(idAlbum);
 	}
 
+	//Obtiene todos los usuarios sin filtros
 	@Override
 	public List<PhotoDto> getPhotosByUser(int idUser) throws Exception{
+		//obtengo la lista de los albums de un usuario
 		List<AlbumDto> albums = albumsService.getUserAndAlbums(idUser);
+		//verifico si tiene albums, caso contrario envio un mensaje 
 		if(albums.isEmpty())throw new Exception("El usuario no tiene albunes");
-		List<PhotoDto> photos = new ArrayList<PhotoDto>();
 		
+		List<PhotoDto> photos = new ArrayList<PhotoDto>();
+		//recorro la lista de albums y por cada album obtengo su id, para luego buscar las fotos utilizando el metodo arriba creado (getPhotos) y guardarlas en la lista
 		for(AlbumDto albumDto : albums) {
 			List<PhotoDto> photosDto = getPhotos(albumDto.getId());
 			for(PhotoDto aux : photosDto) {

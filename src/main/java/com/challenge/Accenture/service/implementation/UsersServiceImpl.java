@@ -16,14 +16,14 @@ public class UsersServiceImpl implements UsersService{
 	@Autowired
 	private JsonPlaceHolderService jsonPlaceHolderService ;
 
+	//Obtiene todos los usuarios sin filtros
 	@Override
 	public List<UserDto> getUsers() {
-		
 		return jsonPlaceHolderService.getUsers();
 	}
 
-	
-	 
+	//Obtiene un usuario por id
+	@Override
 	public UserDto findById(int userId){
 		return jsonPlaceHolderService.getUserId(userId);
 	}
