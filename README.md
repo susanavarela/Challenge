@@ -11,6 +11,10 @@ Proyecto creado en spring tool suite
   0 no tiene permisos
   1 lectura
   2 escritura (teniendo en cuenta de que si escribe tambien puede leer)
+  
+# Swagger 
+Corriendo el proyecto ingresar en algun navegador con la siguiente url
+http://localhost:8080/swagger-ui/index.html#/
 
 # Para pruebas en Postman
   Metodos GET
